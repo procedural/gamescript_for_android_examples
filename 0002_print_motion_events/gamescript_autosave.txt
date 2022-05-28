@@ -1,0 +1,71 @@
+fn debugPrintMotionEvents() {
+  for (var i = 0; i < motionEventsGetCircularBufferMaxCount(); i += 1) {
+    let motion = motionEventsGetEvent(i)
+    let uniqueMotionId = motion[0]
+    let deviceId       = motion[1]
+    let source         = motion[2]
+    let action         = motion[3]
+    let flags          = motion[4]
+    let metaState      = motion[5]
+    let buttonState    = motion[6]
+    let edgeFlags      = motion[7]
+    let downTime       = motion[8]
+    let eventTime      = motion[9]
+    let xOffset        = motion[10]
+    let yOffset        = motion[11]
+    let xPrecision     = motion[12]
+    let yPrecision     = motion[13]
+    let pointersCount  = motion[14]
+    printConsole("motionEvent[" + numberToString(i) + "].uniqueMotionId: " + numberToString(uniqueMotionId) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].deviceId: " + numberToString(deviceId) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].source: " + numberToString(source) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].action: " + numberToString(action) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].flags: " + numberToString(flags) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].metaState: " + numberToString(metaState) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].buttonState: " + numberToString(buttonState) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].edgeFlags: " + numberToString(edgeFlags) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].downTime: " + numberToString(downTime) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].eventTime: " + numberToString(eventTime) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].xOffset: " + numberToString(xOffset) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].yOffset: " + numberToString(yOffset) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].xPrecision: " + numberToString(xPrecision) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].yPrecision: " + numberToString(yPrecision) + "\n")
+    printConsole("motionEvent[" + numberToString(i) + "].pointersCount: " + numberToString(pointersCount) + "\n")
+    for (var j = 0; j < pointersCount; j += 1) {
+      let motionPointer = motionEventsGetEventPointer(i, j)
+      let pointerId   = motionPointer[0]
+      let toolType    = motionPointer[1]
+      let rawX        = motionPointer[2]
+      let rawY        = motionPointer[3]
+      let x           = motionPointer[4]
+      let y           = motionPointer[5]
+      let pressure    = motionPointer[6]
+      let size        = motionPointer[7]
+      let touchMajor  = motionPointer[8]
+      let touchMinor  = motionPointer[9]
+      let toolMajor   = motionPointer[10]
+      let toolMinor   = motionPointer[11]
+      let orientation = motionPointer[12]
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].pointerId: " + numberToString(pointerId) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].toolType: " + numberToString(toolType) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].rawX: " + numberToString(rawX) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].rawY: " + numberToString(rawY) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].x: " + numberToString(x) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].y: " + numberToString(y) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].pressure: " + numberToString(pressure) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].size: " + numberToString(size) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].touchMajor: " + numberToString(touchMajor) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].touchMinor: " + numberToString(touchMinor) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].toolMajor: " + numberToString(toolMajor) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].toolMinor: " + numberToString(toolMinor) + "\n")
+      printConsole("motionEvent[" + numberToString(i) + "].pointers[" + numberToString(j) + "].orientation: " + numberToString(orientation) + "\n")
+    }
+  }
+}
+
+let motionEventsMaxCount = 1
+motionEventsSetCircularBufferMaxCount(motionEventsMaxCount)
+
+printConsoleClear()
+printConsole("Latest motion event index: " + numberToString(motionEventsGetUniqueIdCounter() % motionEventsMaxCount) + "\n")
+debugPrintMotionEvents()
