@@ -1,0 +1,22 @@
+let sgDesc = globalArrayNew8Bit("sgDesc", sg_struct_sizeof("sg_desc"))
+
+let sgPass = globalArrayNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
+
+let sgAction = globalArrayNew8Bit("sgAction", sg_struct_sizeof("sg_color_attachment_action"))
+let SG_ACTION_CLEAR = 1
+pointerSetAtOffsetUnsignedInteger(sgAction, sg_struct_member_offsetof("sg_color_attachment_action", "action"), SG_ACTION_CLEAR)
+pointerSetAtOffsetNumber(sgAction, sg_struct_member_offsetof("sg_color_attachment_action", "value") + 0, 1.0)
+pointerSetAtOffsetNumber(sgAction, sg_struct_member_offsetof("sg_color_attachment_action", "value") + 4, 1.0)
+pointerSetAtOffsetNumber(sgAction, sg_struct_member_offsetof("sg_color_attachment_action", "value") + 8, 0.0)
+pointerSetAtOffsetNumber(sgAction, sg_struct_member_offsetof("sg_color_attachment_action", "value") + 12, 1.0)
+
+memcpy(sgPass, sg_struct_member_offsetof("sg_pass_action", "colors"), sgAction, 0, sg_struct_sizeof("sg_color_attachment_action"))
+
+if (getCurrentFrame() == 0) {
+  toggleDefaultViewportClearCommands(true)
+  sg_setup(sgDesc)
+}
+
+sg_begin_default_pass(sgPass, windowGetWidth(), windowGetHeight())
+sg_end_pass()
+sg_commit()
