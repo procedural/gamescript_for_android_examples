@@ -14,7 +14,9 @@ memcpy(sgPass, sg_struct_member_offsetof("sg_pass_action", "colors"), sgAction, 
 
 if (getCurrentFrame() == 0) {
   toggleDefaultViewportClearCommands(true)
-  sg_setup(sgDesc)
+  if (isAndroid() == true) {
+    sg_setup(sgDesc)
+  }
 }
 
 sg_begin_default_pass(sgPass, windowGetWidth(), windowGetHeight())
