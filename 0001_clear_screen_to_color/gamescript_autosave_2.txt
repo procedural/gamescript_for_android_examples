@@ -1,0 +1,132 @@
+let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
+
+if (getCurrentFrame() == 0) {
+  let SG_ACTION_CLEAR = 1
+
+  let sg_color_sizeof = sg_struct_sizeof("sg_color")
+  let sg_color_attachment_action_sizeof = sg_struct_sizeof("sg_color_attachment_action")
+  let sg_depth_attachment_action_sizeof = sg_struct_sizeof("sg_depth_attachment_action")
+  let sg_stencil_attachment_action_sizeof = sg_struct_sizeof("sg_stencil_attachment_action")
+  let sg_pass_action_sizeof = sg_struct_sizeof("sg_pass_action")
+  let sg_desc_sizeof = sg_struct_sizeof("sg_desc")
+  let sg_color_offsetof_r = sg_struct_member_offsetof("sg_color", "r")
+  let sg_color_offsetof_g = sg_struct_member_offsetof("sg_color", "g")
+  let sg_color_offsetof_b = sg_struct_member_offsetof("sg_color", "b")
+  let sg_color_offsetof_a = sg_struct_member_offsetof("sg_color", "a")
+  let sg_color_attachment_action_offsetof_action = sg_struct_member_offsetof("sg_color_attachment_action", "action")
+  let sg_color_attachment_action_offsetof_value = sg_struct_member_offsetof("sg_color_attachment_action", "value")
+  let sg_depth_attachment_action_offsetof_action = sg_struct_member_offsetof("sg_depth_attachment_action", "action")
+  let sg_depth_attachment_action_offsetof_value = sg_struct_member_offsetof("sg_depth_attachment_action", "value")
+  let sg_stencil_attachment_action_offsetof_action = sg_struct_member_offsetof("sg_stencil_attachment_action", "action")
+  let sg_stencil_attachment_action_offsetof_value = sg_struct_member_offsetof("sg_stencil_attachment_action", "value")
+  let sg_pass_action_offsetof__start_canary = sg_struct_member_offsetof("sg_pass_action", "_start_canary")
+  let sg_pass_action_offsetof_colors = sg_struct_member_offsetof("sg_pass_action", "colors")
+  let sg_pass_action_offsetof_depth = sg_struct_member_offsetof("sg_pass_action", "depth")
+  let sg_pass_action_offsetof_stencil = sg_struct_member_offsetof("sg_pass_action", "stencil")
+  let sg_pass_action_offsetof__end_canary = sg_struct_member_offsetof("sg_pass_action", "_end_canary")
+
+  fn pointerSetAtOffset_uint32_t(pointer, bytesFirst, value)          { return pointerSetAtOffsetUnsignedInteger(pointer, bytesFirst, value) }
+  fn pointerSetAtOffset_float(pointer, bytesFirst, value)             { return pointerSetAtOffsetNumber(pointer, bytesFirst, value) }
+  fn pointerSetAtOffset_sg_action(pointer, bytesFirst, value)         { return pointerSetAtOffsetUnsignedInteger(pointer, bytesFirst, value) }
+  fn pointerSetAtOffset_uint8_t(pointer, bytesFirst, value)           { return pointerSetUnsignedInteger8Bit(pointer, bytesFirst, value) }
+
+  fn sg_pass_action(
+    structPointer, // Number structPointer
+    _start_canary, // Number _start_canary
+    colors0Action, // Number colors0Action
+    colors0ValueR, // Number colors0ValueR
+    colors0ValueG, // Number colors0ValueG
+    colors0ValueB, // Number colors0ValueB
+    colors0ValueA, // Number colors0ValueA
+    colors1Action, // Number colors1Action
+    colors1ValueR, // Number colors1ValueR
+    colors1ValueG, // Number colors1ValueG
+    colors1ValueB, // Number colors1ValueB
+    colors1ValueA, // Number colors1ValueA
+    colors2Action, // Number colors2Action
+    colors2ValueR, // Number colors2ValueR
+    colors2ValueG, // Number colors2ValueG
+    colors2ValueB, // Number colors2ValueB
+    colors2ValueA, // Number colors2ValueA
+    colors3Action, // Number colors3Action
+    colors3ValueR, // Number colors3ValueR
+    colors3ValueG, // Number colors3ValueG
+    colors3ValueB, // Number colors3ValueB
+    colors3ValueA, // Number colors3ValueA
+    depthAction, // Number depthAction
+    depthValue, // Number depthValue
+    stencilAction, // Number stencilAction
+    stencilValue, // Number stencilValue
+    _end_canary, // Number _end_canary
+    setTo0 // Number setTo0
+  )
+  {
+    pointerSetAtOffset_uint32_t(structPointer, sg_pass_action_offsetof__start_canary, _start_canary)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 0) + sg_color_attachment_action_offsetof_action, colors0Action)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 0) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_r, colors0ValueR)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 0) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_g, colors0ValueG)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 0) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_b, colors0ValueB)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 0) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_a, colors0ValueA)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 1) + sg_color_attachment_action_offsetof_action, colors1Action)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 1) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_r, colors1ValueR)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 1) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_g, colors1ValueG)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 1) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_b, colors1ValueB)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 1) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_a, colors1ValueA)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 2) + sg_color_attachment_action_offsetof_action, colors2Action)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 2) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_r, colors2ValueR)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 2) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_g, colors2ValueG)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 2) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_b, colors2ValueB)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 2) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_a, colors2ValueA)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 3) + sg_color_attachment_action_offsetof_action, colors3Action)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 3) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_r, colors3ValueR)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 3) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_g, colors3ValueG)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 3) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_b, colors3ValueB)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_colors + (sg_color_attachment_action_sizeof * 3) + sg_color_attachment_action_offsetof_value + (sg_color_sizeof * 0) + sg_color_offsetof_a, colors3ValueA)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_depth + (sg_depth_attachment_action_sizeof * 0) + sg_depth_attachment_action_offsetof_action, depthAction)
+    pointerSetAtOffset_float(structPointer, sg_pass_action_offsetof_depth + (sg_depth_attachment_action_sizeof * 0) + sg_depth_attachment_action_offsetof_value, depthValue)
+    pointerSetAtOffset_sg_action(structPointer, sg_pass_action_offsetof_stencil + (sg_stencil_attachment_action_sizeof * 0) + sg_stencil_attachment_action_offsetof_action, stencilAction)
+    pointerSetAtOffset_uint8_t(structPointer, sg_pass_action_offsetof_stencil + (sg_stencil_attachment_action_sizeof * 0) + sg_stencil_attachment_action_offsetof_value, stencilValue)
+    pointerSetAtOffset_uint32_t(structPointer, sg_pass_action_offsetof__end_canary, _end_canary)
+  }
+
+  sg_pass_action(
+    sgPass, // Number structPointer
+    0, // Number _start_canary
+    SG_ACTION_CLEAR, // Number colors0Action
+    1.0, // Number colors0ValueR
+    1.0, // Number colors0ValueG
+    0.0, // Number colors0ValueB
+    1.0, // Number colors0ValueA
+    0, // Number colors1Action
+    0.0, // Number colors1ValueR
+    0.0, // Number colors1ValueG
+    0.0, // Number colors1ValueB
+    0.0, // Number colors1ValueA
+    0, // Number colors2Action
+    0.0, // Number colors2ValueR
+    0.0, // Number colors2ValueG
+    0.0, // Number colors2ValueB
+    0.0, // Number colors2ValueA
+    0, // Number colors3Action
+    0.0, // Number colors3ValueR
+    0.0, // Number colors3ValueG
+    0.0, // Number colors3ValueB
+    0.0, // Number colors3ValueA
+    0, // Number depthAction
+    0.0, // Number depthValue
+    0, // Number stencilAction
+    0, // Number stencilValue
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+
+  toggleDefaultViewportClearCommands(true)
+  if (isAndroid() == true) {
+    let sgDesc = globalArrayNew8Bit("sgDesc", sg_struct_sizeof("sg_desc"))
+    sg_setup(sgDesc)
+  }
+}
+
+sg_begin_default_pass(sgPass, windowGetWidth(), windowGetHeight())
+sg_end_pass()
+sg_commit()
