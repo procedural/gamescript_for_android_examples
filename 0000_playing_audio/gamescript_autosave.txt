@@ -2,6 +2,10 @@ if (getCurrentFrame() == 0) {
   let sl = slSoloud_create()
   slSoloud_initEx(sl, 1, 0, 0, 0, 2)
   let wav = slWav_create()
-  slWav_load(wav, "/storage/emulated/0/Download/sound.wav")
+  if (isAndroid() == true) {
+    slWav_load(wav, "/storage/emulated/0/Download/sound.wav")
+  } else {
+    slWav_load(wav, getWindowsPlatformLocalFolderPathString() + "\\sound.wav")
+  }
   slSoloud_playEx(sl, wav, -1, 0, 0, 0)
 }
