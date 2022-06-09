@@ -1,7 +1,7 @@
-let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
-
 if (getCurrentFrame() == 0) {
   let SG_ACTION_CLEAR = 1
+
+  let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
 
   let sg_color_sizeof = sg_struct_sizeof("sg_color")
   let sg_color_attachment_action_sizeof = sg_struct_sizeof("sg_color_attachment_action")
@@ -126,6 +126,10 @@ if (getCurrentFrame() == 0) {
     sg_setup(sgDesc)
   }
 }
+
+//@
+
+let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
 
 sg_begin_default_pass(sgPass, windowGetWidth(), windowGetHeight())
 sg_end_pass()
