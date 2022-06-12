@@ -1,0 +1,523 @@
+if (getCurrentFrame() == 0) {
+  setFrame0Cache(true)
+
+  // Paste here code from https://github.com/procedural/gamescript_structs_generator/blob/master/sokol_gfx_constants.txt
+  // Paste here code from https://github.com/procedural/gamescript_structs_generator/blob/master/sokol_gfx_functions.txt
+  // Paste here code from https://github.com/procedural/gamescript_structs_generator/blob/master/sokol_gfx_structs.txt
+
+  if (isAndroid() == true) {
+    let sgDesc = globalArrayNew8Bit("sgDesc", sg_struct_sizeof("sg_desc"))
+    sg_setup(sgDesc)
+  }
+
+  let SG_ACTION_CLEAR = 1
+
+  let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
+  sg_pass_action(
+    sgPass, // Number structPointer
+    0, // Number _start_canary
+    SG_ACTION_CLEAR, // Number colors0Action
+    1.0, // Number colors0ValueR
+    1.0, // Number colors0ValueG
+    0.0, // Number colors0ValueB
+    1.0, // Number colors0ValueA
+    0, // Number colors1Action
+    0.0, // Number colors1ValueR
+    0.0, // Number colors1ValueG
+    0.0, // Number colors1ValueB
+    0.0, // Number colors1ValueA
+    0, // Number colors2Action
+    0.0, // Number colors2ValueR
+    0.0, // Number colors2ValueG
+    0.0, // Number colors2ValueB
+    0.0, // Number colors2ValueA
+    0, // Number colors3Action
+    0.0, // Number colors3ValueR
+    0.0, // Number colors3ValueG
+    0.0, // Number colors3ValueB
+    0.0, // Number colors3ValueA
+    0, // Number depthAction
+    0.0, // Number depthValue
+    0, // Number stencilAction
+    0, // Number stencilValue
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+
+  var vsSource = ""
+  var psSource = ""
+  var vsEntry  = "VSMain"
+  var psEntry  = "PSMain"
+  if (isAndroid() == true) {
+    vsEntry = "main"
+    psEntry = "main"
+  }
+
+  if (isAndroid() == true) {
+
+    vsSource = "#version 300 es" +
+"\n #if 1" +
+"\n out vec4 position;" +
+"\n " +
+"\n void main() {" +
+"\n   position = vec4(gl_VertexID == 1 ? 3 : -1, gl_VertexID == 2 ? 3 : -1, 0.5, 1);" +
+"\n   gl_Position = position;" +
+"\n }" +
+"\n #endif" +
+"\n " +
+"\n #if 0" +
+"\n in vec4 position;" +
+"\n " +
+"\n layout(location = 0) out vec4 color;" +
+"\n " +
+"\n void main() {" +
+"\n   float W = 1080.0;" +
+"\n   float H = 1920.0;" +
+"\n   float U = position.x;" +
+"\n   float V = position.y;" +
+"\n   vec4 C = vec4(0, 1, 0, 1);" +
+"\n " +
+"\n   vec2 z = vec2(0, 0);" +
+"\n   vec2 c = vec2(0, 0);" +
+"\n   float aspect = W / H;" +
+"\n   c.x = (U - 0.5) * aspect;" +
+"\n   c.y = V;" +
+"\n   int i = 0, iter = 100;" +
+"\n   z = c;" +
+"\n   for (i = 0; i < iter; i += 1) {" +
+"\n     float x = (z.x * z.x - z.y * z.y) + c.x;" +
+"\n     float y = (z.y * z.x + z.x * z.y) + c.y;" +
+"\n     if ((x * x + y * y) > 4.0)" +
+"\n       break;" +
+"\n     z.x = x;" +
+"\n     z.y = y;" +
+"\n   }" +
+"\n " +
+"\n   C.g = (i == iter ? 0.0 : float(i)) / 50.0;" +
+"\n " +
+"\n   color = C;" +
+"\n }" +
+"\n #endif" +
+"\n"
+
+    psSource = "#version 300 es" +
+"\n #if 0" +
+"\n out vec4 position;" +
+"\n " +
+"\n void main() {" +
+"\n   position = vec4(gl_VertexID == 1 ? 3 : -1, gl_VertexID == 2 ? 3 : -1, 0.5, 1);" +
+"\n   gl_Position = position;" +
+"\n }" +
+"\n #endif" +
+"\n " +
+"\n #if 1" +
+"\n in vec4 position;" +
+"\n " +
+"\n layout(location = 0) out vec4 color;" +
+"\n " +
+"\n void main() {" +
+"\n   float W = 1080.0;" +
+"\n   float H = 1920.0;" +
+"\n   float U = position.x;" +
+"\n   float V = position.y;" +
+"\n   vec4 C = vec4(0, 1, 0, 1);" +
+"\n " +
+"\n   vec2 z = vec2(0, 0);" +
+"\n   vec2 c = vec2(0, 0);" +
+"\n   float aspect = W / H;" +
+"\n   c.x = (U - 0.5) * aspect;" +
+"\n   c.y = V;" +
+"\n   int i = 0, iter = 100;" +
+"\n   z = c;" +
+"\n   for (i = 0; i < iter; i += 1) {" +
+"\n     float x = (z.x * z.x - z.y * z.y) + c.x;" +
+"\n     float y = (z.y * z.x + z.x * z.y) + c.y;" +
+"\n     if ((x * x + y * y) > 4.0)" +
+"\n       break;" +
+"\n     z.x = x;" +
+"\n     z.y = y;" +
+"\n   }" +
+"\n " +
+"\n   C.g = (i == iter ? 0.0 : float(i)) / 50.0;" +
+"\n " +
+"\n   color = C;" +
+"\n }" +
+"\n #endif" +
+"\n"
+
+  } else {
+
+    vsSource = "" +
+"\n struct interpolated {" +
+"\n   float4 position: SV_Position;" +
+"\n };" +
+"\n " +
+"\n struct render {" +
+"\n   float4 color: SV_Target0;" +
+"\n };" +
+"\n " +
+"\n #if 1" +
+"\n interpolated VSMain(uint vid: SV_VertexID, uint iid: SV_InstanceID) {" +
+"\n   interpolated output;" +
+"\n   output.position = float4(vid == 1 ? 3 : -1, vid == 2 ? 3 : -1, 0.5, 1);" +
+"\n   return output;" +
+"\n }" +
+"\n #endif" +
+"\n " +
+"\n #if 0" +
+"\n render PSMain(interpolated input) {" +
+"\n   float W = 1920.0;" +
+"\n   float H = 1080.0;" +
+"\n   float U = input.position.x / W;" +
+"\n   float V = input.position.y / H;" +
+"\n   float4 C = float4(0, 1, 0, 1);" +
+"\n " +
+"\n   float2 z = float2(0, 0);" +
+"\n   float2 c = float2(0, 0);" +
+"\n   float aspect = W / H;" +
+"\n   c.x = (U - 0.5) * 3.0 * aspect;" +
+"\n   c.y = (V - 0.5) * 3.0;" +
+"\n   int i = 0, iter = 100;" +
+"\n   z = c;" +
+"\n   for (i = 0; i < iter; i += 1) {" +
+"\n     float x = (z.x * z.x - z.y * z.y) + c.x;" +
+"\n     float y = (z.y * z.x + z.x * z.y) + c.y;" +
+"\n     if ((x * x + y * y) > 4.0)" +
+"\n       break;" +
+"\n     z.x = x;" +
+"\n     z.y = y;" +
+"\n   }" +
+"\n " +
+"\n   C.g = (i == iter ? 0.0 : float(i)) / 50.0;" +
+"\n " +
+"\n   render output;" +
+"\n   output.color = C;" +
+"\n   return output;" +
+"\n }" +
+"\n #endif" +
+"\n"
+
+    psSource = "" +
+"\n struct interpolated {" +
+"\n   float4 position: SV_Position;" +
+"\n };" +
+"\n " +
+"\n struct render {" +
+"\n   float4 color: SV_Target0;" +
+"\n };" +
+"\n " +
+"\n #if 0" +
+"\n interpolated VSMain(uint vid: SV_VertexID, uint iid: SV_InstanceID) {" +
+"\n   interpolated output;" +
+"\n   output.position = float4(vid == 1 ? 3 : -1, vid == 2 ? 3 : -1, 0.5, 1);" +
+"\n   return output;" +
+"\n }" +
+"\n #endif" +
+"\n " +
+"\n #if 1" +
+"\n render PSMain(interpolated input) {" +
+"\n   float W = 1920.0;" +
+"\n   float H = 1080.0;" +
+"\n   float U = input.position.x / W;" +
+"\n   float V = input.position.y / H;" +
+"\n   float4 C = float4(0, 1, 0, 1);" +
+"\n " +
+"\n   float2 z = float2(0, 0);" +
+"\n   float2 c = float2(0, 0);" +
+"\n   float aspect = W / H;" +
+"\n   c.x = (U - 0.5) * 3.0 * aspect;" +
+"\n   c.y = (V - 0.5) * 3.0;" +
+"\n   int i = 0, iter = 100;" +
+"\n   z = c;" +
+"\n   for (i = 0; i < iter; i += 1) {" +
+"\n     float x = (z.x * z.x - z.y * z.y) + c.x;" +
+"\n     float y = (z.y * z.x + z.x * z.y) + c.y;" +
+"\n     if ((x * x + y * y) > 4.0)" +
+"\n       break;" +
+"\n     z.x = x;" +
+"\n     z.y = y;" +
+"\n   }" +
+"\n " +
+"\n   C.g = (i == iter ? 0.0 : float(i)) / 50.0;" +
+"\n " +
+"\n   render output;" +
+"\n   output.color = C;" +
+"\n   return output;" +
+"\n }" +
+"\n #endif" +
+"\n"
+
+  }
+
+  let sgShader = globalArrayPersistentNew8Bit("sgShader", sg_struct_sizeof("sg_shader_desc"))
+  sg_shader_desc(
+    sgShader, // Number structPointer
+    0, // Number _start_canary
+    [""], // String attrsName [16]
+    ["POS"], // String attrsSem_name [16]
+    [0], // Number attrsSem_index [16]
+    vsSource, // String vsSource
+    0, // Number vsBytecodePtr
+    0, // Number vsBytecodeSize
+    vsEntry, // String vsEntry
+    "", // String vsD3d11_target
+    0, // Number vsUniform_blocks0Size
+    0, // Number vsUniform_blocks0Layout
+    [], // String vsUniform_blocks0UniformsName [16]
+    [], // Number vsUniform_blocks0UniformsType [16]
+    [], // Number vsUniform_blocks0UniformsArray_count [16]
+    0, // Number vsUniform_blocks1Size
+    0, // Number vsUniform_blocks1Layout
+    [], // String vsUniform_blocks1UniformsName [16]
+    [], // Number vsUniform_blocks1UniformsType [16]
+    [], // Number vsUniform_blocks1UniformsArray_count [16]
+    0, // Number vsUniform_blocks2Size
+    0, // Number vsUniform_blocks2Layout
+    [], // String vsUniform_blocks2UniformsName [16]
+    [], // Number vsUniform_blocks2UniformsType [16]
+    [], // Number vsUniform_blocks2UniformsArray_count [16]
+    0, // Number vsUniform_blocks3Size
+    0, // Number vsUniform_blocks3Layout
+    [], // String vsUniform_blocks3UniformsName [16]
+    [], // Number vsUniform_blocks3UniformsType [16]
+    [], // Number vsUniform_blocks3UniformsArray_count [16]
+    [], // String vsImagesName [12]
+    [], // Number vsImagesImage_type [12]
+    [], // Number vsImagesSampler_type [12]
+    psSource, // String fsSource
+    0, // Number fsBytecodePtr
+    0, // Number fsBytecodeSize
+    psEntry, // String fsEntry
+    "", // String fsD3d11_target
+    0, // Number fsUniform_blocks0Size
+    0, // Number fsUniform_blocks0Layout
+    [], // String fsUniform_blocks0UniformsName [16]
+    [], // Number fsUniform_blocks0UniformsType [16]
+    [], // Number fsUniform_blocks0UniformsArray_count [16]
+    0, // Number fsUniform_blocks1Size
+    0, // Number fsUniform_blocks1Layout
+    [], // String fsUniform_blocks1UniformsName [16]
+    [], // Number fsUniform_blocks1UniformsType [16]
+    [], // Number fsUniform_blocks1UniformsArray_count [16]
+    0, // Number fsUniform_blocks2Size
+    0, // Number fsUniform_blocks2Layout
+    [], // String fsUniform_blocks2UniformsName [16]
+    [], // Number fsUniform_blocks2UniformsType [16]
+    [], // Number fsUniform_blocks2UniformsArray_count [16]
+    0, // Number fsUniform_blocks3Size
+    0, // Number fsUniform_blocks3Layout
+    [], // String fsUniform_blocks3UniformsName [16]
+    [], // Number fsUniform_blocks3UniformsType [16]
+    [], // Number fsUniform_blocks3UniformsArray_count [16]
+    [], // String fsImagesName [12]
+    [], // Number fsImagesImage_type [12]
+    [], // Number fsImagesSampler_type [12]
+    "", // String label
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+  let shaderId = sg_make_shader(sgShader)
+
+  let SG_VERTEXFORMAT_FLOAT3 = 3
+
+  let sgPipeline = globalArrayPersistentNew8Bit("sgPipeline", sg_struct_sizeof("sg_pipeline_desc"))
+  sg_pipeline_desc(
+    sgPipeline, // Number structPointer
+    0, // Number _start_canary
+    shaderId, // Number shaderId
+    [], // Number layoutBuffersStride [8]
+    [], // Number layoutBuffersStep_func [8]
+    [], // Number layoutBuffersStep_rate [8]
+    [0], // Number layoutAttrsBuffer_index [16]
+    [0], // Number layoutAttrsOffset [16]
+    [SG_VERTEXFORMAT_FLOAT3], // Number layoutAttrsFormat [16]
+    0, // Number depthPixel_format
+    0, // Number depthCompare
+    0, // Number depthWrite_enabled
+    0, // Number depthBias
+    0, // Number depthBias_slope_scale
+    0, // Number depthBias_clamp
+    0, // Number stencilEnabled
+    0, // Number stencilFrontCompare
+    0, // Number stencilFrontFail_op
+    0, // Number stencilFrontDepth_fail_op
+    0, // Number stencilFrontPass_op
+    0, // Number stencilBackCompare
+    0, // Number stencilBackFail_op
+    0, // Number stencilBackDepth_fail_op
+    0, // Number stencilBackPass_op
+    0, // Number stencilRead_mask
+    0, // Number stencilWrite_mask
+    0, // Number stencilRef
+    0, // Number color_count
+    0, // Number colors0Pixel_format
+    0, // Number colors0Write_mask
+    0, // Number colors0BlendEnabled
+    0, // Number colors0BlendSrc_factor_rgb
+    0, // Number colors0BlendDst_factor_rgb
+    0, // Number colors0BlendOp_rgb
+    0, // Number colors0BlendSrc_factor_alpha
+    0, // Number colors0BlendDst_factor_alpha
+    0, // Number colors0BlendOp_alpha
+    0, // Number colors1Pixel_format
+    0, // Number colors1Write_mask
+    0, // Number colors1BlendEnabled
+    0, // Number colors1BlendSrc_factor_rgb
+    0, // Number colors1BlendDst_factor_rgb
+    0, // Number colors1BlendOp_rgb
+    0, // Number colors1BlendSrc_factor_alpha
+    0, // Number colors1BlendDst_factor_alpha
+    0, // Number colors1BlendOp_alpha
+    0, // Number colors2Pixel_format
+    0, // Number colors2Write_mask
+    0, // Number colors2BlendEnabled
+    0, // Number colors2BlendSrc_factor_rgb
+    0, // Number colors2BlendDst_factor_rgb
+    0, // Number colors2BlendOp_rgb
+    0, // Number colors2BlendSrc_factor_alpha
+    0, // Number colors2BlendDst_factor_alpha
+    0, // Number colors2BlendOp_alpha
+    0, // Number colors3Pixel_format
+    0, // Number colors3Write_mask
+    0, // Number colors3BlendEnabled
+    0, // Number colors3BlendSrc_factor_rgb
+    0, // Number colors3BlendDst_factor_rgb
+    0, // Number colors3BlendOp_rgb
+    0, // Number colors3BlendSrc_factor_alpha
+    0, // Number colors3BlendDst_factor_alpha
+    0, // Number colors3BlendOp_alpha
+    0, // Number primitive_type
+    0, // Number index_type
+    0, // Number cull_mode
+    0, // Number face_winding
+    0, // Number sample_count
+    0, // Number blend_colorR
+    0, // Number blend_colorG
+    0, // Number blend_colorB
+    0, // Number blend_colorA
+    0, // Number alpha_to_coverage_enabled
+    "", // String label
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+  let pipelineId = sg_make_pipeline(sgPipeline)
+
+  let bufferData = globalArrayPersistentNew8Bit("bufferData", 4 * 9)
+  pointerSetNumber(bufferData, 0,  0.0)
+  pointerSetNumber(bufferData, 1,  0.5)
+  pointerSetNumber(bufferData, 2,  0.5)
+  pointerSetNumber(bufferData, 3,  0.5)
+  pointerSetNumber(bufferData, 4, -0.5)
+  pointerSetNumber(bufferData, 5,  0.5)
+  pointerSetNumber(bufferData, 6, -0.5)
+  pointerSetNumber(bufferData, 7, -0.5)
+  pointerSetNumber(bufferData, 8,  0.5)
+
+  let sgBuffer = globalArrayPersistentNew8Bit("sgBuffer", sg_struct_sizeof("sg_buffer_desc"))
+  sg_buffer_desc(
+    sgBuffer, // Number structPointer
+    0, // Number _start_canary
+    0, // Number size
+    0, // Number type
+    0, // Number usage
+    bufferData, // Number dataPtr
+    4 * 9, // Number dataSize
+    "", // String label
+    [], // Number gl_buffers [2]
+    [], // Number mtl_buffers [2]
+    0, // Number d3d11_buffer
+    0, // Number wgpu_buffer
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+  let bufferId = sg_make_buffer(sgBuffer)
+
+  let bindings = globalArrayPersistentNew8Bit("bindings", sg_struct_sizeof("sg_bindings"))
+  sg_bindings(
+    bindings, // Number structPointer
+    0, // Number _start_canary
+    [bufferId], // Number vertex_buffersId [8]
+    [0], // Number vertex_buffer_offsets [8]
+    0, // Number index_bufferId
+    0, // Number index_buffer_offset
+    [], // Number vs_imagesId [12]
+    [], // Number fs_imagesId [12]
+    0, // Number _end_canary
+    0 // Number setTo0
+  )
+
+  let sgIdsCount = 4
+  if (dynamicArrayGetSize(globalDynamicArrayPersistentNew("sgIds")) < sgIdsCount) {
+    globalDynamicArrayPersistentDelete("sgIds")
+    for (var i = 0; i < sgIdsCount; i += 1) {
+      dynamicArrayAppend(globalDynamicArrayPersistentNew("sgIds"), 0)
+    }
+  }
+  dynamicArraySet(globalDynamicArrayPersistentNew("sgIds"), 0, shaderId)
+  dynamicArraySet(globalDynamicArrayPersistentNew("sgIds"), 1, pipelineId)
+  dynamicArraySet(globalDynamicArrayPersistentNew("sgIds"), 2, bufferId)
+  dynamicArraySet(globalDynamicArrayPersistentNew("sgIds"), 3, bindings)
+
+  toggleDefaultViewportClearCommands(true)
+}
+
+//@
+
+if (isWindowsPlatform() == true && areAllWindowsHidden() == false) {
+  var percentPointer = globalArrayPersistentNew8Bit("__windowDisplayScalingPercent", 4)
+  if (pointerGetNumber(percentPointer, 0) == 0) {
+    let percentString = stringReadFromFile(getWindowsPlatformLocalFolderPathString() + "\\gamescript_display_scaling.txt")
+    if (percentString == "") {
+      pointerSetNumber(percentPointer, 0, 100)
+    } else {
+      pointerSetNumber(percentPointer, 0, interpretStringToInteger(percentString))
+    }
+  }
+  imguiWindowBegin("Windows Display Scaling", globalArrayPersistentNew8Bit("__windowDisplayScalingIsOpen", 1), 0)
+  let percentStringPointer = globalArrayPersistentNew8Bit("__windowDisplayScalingPercentString", 5)
+  if (imguiInputText("%", percentStringPointer, 0, 4) == true) {
+    let percentString = pointerGetString(percentStringPointer)
+    if (percentString != "") {
+      let c0 = percentString[0]
+      let c1 = percentString[1]
+      let c2 = percentString[2]
+      let c0IsNum = c0 == '0' || c0 == '1' || c0 == '2' || c0 == '3' || c0 == '4' || c0 == '5' || c0 == '6' || c0 == '7' || c0 == '8' || c0 == '9'
+      let c1IsNum = c1 == '0' || c1 == '1' || c1 == '2' || c1 == '3' || c1 == '4' || c1 == '5' || c1 == '6' || c1 == '7' || c1 == '8' || c1 == '9'
+      let c2IsNum = c2 == '0' || c2 == '1' || c2 == '2' || c2 == '3' || c2 == '4' || c2 == '5' || c2 == '6' || c2 == '7' || c2 == '8' || c2 == '9'
+      if (c0IsNum == true && c1IsNum == true && c2IsNum == true) {
+        var percent = interpretStringToInteger(percentString)
+        if (percent < 100) {
+          percent = 100
+        }
+        pointerSetNumber(percentPointer, 0, percent)
+        stringWriteToFile(percentString, getWindowsPlatformLocalFolderPathString() + "\\gamescript_display_scaling.txt")
+      }
+    }
+  }
+  imguiWindowEnd()
+}
+fn windowGetWidthScaled() {
+  if (isAndroid() == true) {
+    return windowGetWidth()
+  } else {
+    let percent = pointerGetNumber(globalArrayPersistentNew8Bit("__windowDisplayScalingPercent", 4), 0)
+    return windowGetWidth() * (percent == 0.0 ? 100.0 : percent) * 0.01
+  }
+}
+fn windowGetHeightScaled() {
+  if (isAndroid() == true) {
+    return windowGetHeight()
+  } else {
+    let percent = pointerGetNumber(globalArrayPersistentNew8Bit("__windowDisplayScalingPercent", 4), 0)
+    return windowGetHeight() * (percent == 0.0 ? 100.0 : percent) * 0.01
+  }
+}
+
+let sgPass = globalArrayPersistentNew8Bit("sgPass", sg_struct_sizeof("sg_pass_action"))
+
+sg_begin_default_pass(sgPass, windowGetWidthScaled(), windowGetHeightScaled())
+sg_apply_pipeline(dynamicArrayGet(globalDynamicArrayPersistentNew("sgIds"), 1))
+sg_apply_bindings(dynamicArrayGet(globalDynamicArrayPersistentNew("sgIds"), 3))
+sg_draw(0, 3, 1)
+sg_end_pass()
+sg_commit()
