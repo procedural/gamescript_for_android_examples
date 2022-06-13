@@ -1,4 +1,4 @@
-{
+if (getCurrentFrame() == 0 || getFrame0Cache() == false) {
   setFrame0Cache(true)
 
   // Paste here code from https://github.com/procedural/gamescript_structs_generator/blob/master/sokol_gfx_constants.txt
