@@ -1,4 +1,4 @@
-if (getCurrentFrame() == 0) {
+{
   setFrame0Cache(true)
 
   // Paste here code from https://github.com/procedural/gamescript_structs_generator/blob/master/sokol_gfx_constants.txt
@@ -521,3 +521,16 @@ sg_apply_bindings(dynamicArrayGet(globalDynamicArrayPersistentNew("sgIds"), 3))
 sg_draw(0, 3, 1)
 sg_end_pass()
 sg_commit()
+
+let deviceOrientationFrame0CacheFramesCount = 10
+let deviceOrientationPointer = globalArrayPersistentNew8Bit("__deviceOrientation", 4)
+let deviceOrientation = deviceGetOrientation()
+if (pointerGetInteger(deviceOrientationPointer, 0) != deviceOrientation) {
+  pointerSetInteger(globalArrayPersistentNew8Bit("__deviceOrientationFrame0CacheCounter", 4), 0, deviceOrientationFrame0CacheFramesCount)
+}
+pointerSetInteger(deviceOrientationPointer, 0, deviceOrientation)
+let deviceOrientationFrame0CacheCounter = pointerGetInteger(globalArrayPersistentNew8Bit("__deviceOrientationFrame0CacheCounter", 4), 0)
+if (deviceOrientationFrame0CacheCounter > 0) {
+  setFrame0Cache(false)
+  pointerSetInteger(globalArrayPersistentNew8Bit("__deviceOrientationFrame0CacheCounter", 4), 0, deviceOrientationFrame0CacheCounter - 1)
+}
