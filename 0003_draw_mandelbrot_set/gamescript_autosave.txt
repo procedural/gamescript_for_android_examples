@@ -501,7 +501,7 @@ fn windowGetWidthScaled() {
     return windowGetWidth()
   } else {
     let percent = pointerGetNumber(globalArrayPersistentNew8Bit("__windowDisplayScalingPercent", 4), 0)
-    return windowGetWidth() * (percent == 0.0 ? 100.0 : percent) * 0.01
+    return ceil(windowGetWidth() * (percent == 0.0 ? 100.0 : percent) * 0.01)
   }
 }
 fn windowGetHeightScaled() {
@@ -509,7 +509,7 @@ fn windowGetHeightScaled() {
     return windowGetHeight()
   } else {
     let percent = pointerGetNumber(globalArrayPersistentNew8Bit("__windowDisplayScalingPercent", 4), 0)
-    return windowGetHeight() * (percent == 0.0 ? 100.0 : percent) * 0.01
+    return ceil(windowGetHeight() * (percent == 0.0 ? 100.0 : percent) * 0.01)
   }
 }
 
