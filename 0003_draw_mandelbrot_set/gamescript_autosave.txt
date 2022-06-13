@@ -530,7 +530,9 @@ if (pointerGetInteger(deviceOrientationPointer, 0) != deviceOrientation) {
 }
 pointerSetInteger(deviceOrientationPointer, 0, deviceOrientation)
 let deviceOrientationFrame0CacheCounter = pointerGetInteger(globalArrayPersistentNew8Bit("__deviceOrientationFrame0CacheCounter", 4), 0)
-if (deviceOrientationFrame0CacheCounter > 0) {
+if (deviceOrientationFrame0CacheCounter == 1) {
   setFrame0Cache(false)
+}
+if (deviceOrientationFrame0CacheCounter > 0) {
   pointerSetInteger(globalArrayPersistentNew8Bit("__deviceOrientationFrame0CacheCounter", 4), 0, deviceOrientationFrame0CacheCounter - 1)
 }
